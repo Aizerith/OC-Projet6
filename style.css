@@ -1,0 +1,53 @@
+table, td, tr {
+    border: 2px solid black;
+}
+
+td {
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+}
+
+.moveCells{
+    background-color: aqua;
+}
+
+.disabled {
+    background: grey;
+}
+
+span.has-player {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+span.has-weapon {
+    /*background: red;*/
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.displayPlayer {
+    display: flex;
+    margin: 0 -5px;
+}
+
+#gamebutton {
+    margin: 10px 0 0 5px;
+}
+
+.info-joueur {
+    border: 2px solid black;
+    width: 200px;
+    height: 220px;
+    text-align: center;
+    margin: 10px 0 0 5px;
+}
