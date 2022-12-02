@@ -9,7 +9,7 @@ class Weapon{
     createWeaponElt(){
         const weaponElt = document.createElement('span');
         weaponElt.classList.add('has-weapon');
-        weaponElt.setAttribute("value", this.name);
+        weaponElt.setAttribute("data-weapon", this.name);
         weaponElt.style.backgroundImage= `url(./src/${this.imgSrc})`;
 
         return weaponElt

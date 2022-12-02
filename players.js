@@ -1,12 +1,12 @@
 class Player {
-    constructor(name, imgSrc, playerTurn){
+    constructor(name, imgSrc){
         this.name = name;
         this.hp = 100;
         this.weapon = new Weapon("couteau", 10, 'knife.png');
         this.imgSrc = imgSrc;
         this.game;
         this.enemy;
-        this.playerTurn = playerTurn;
+        this.playerTurn;
         this.curX;
         this.curY;
         this.panel;
@@ -78,7 +78,7 @@ class Player {
         })
     }
 
-    unshowMovableCells(movableCells){
+    removeMovableCells(movableCells){
         movableCells.forEach(cell=>{
             cell.classList.remove('moveCells');
         })
@@ -91,50 +91,78 @@ class Player {
             return false;
     }
 
-    getWeapon(selectedCell){
+    getWeapon(newWeapon){
+        let playerWeapon;
         this.game.weapons.forEach(weapon=>{
-            if(weapon.name == selectedCell.value){
-                return weapon;
+            if(weapon.name == newWeapon){
+                console.log("arme trouvé", weapon);
+                playerWeapon = weapon;
             }
         })
+        return playerWeapon;
     }
 
-    switchWeapon(startCell, EndCell){
+    switchWeapon(startCell, endCell){
+
+        console.log("startcell endcell", startCell, endCell);
+        const newWeapon = endCell.querySelector('.has-weapon').getAttribute('data-weapon');
+        console.log("newWeapon", newWeapon);
         startCell.classList.add('has-weapon');
         startCell.appendChild(this.weapon.createWeaponElt());
-        console.log("endcell:", EndCell);
-        this.weapon = this.getWeapon(EndCell);
-        EndCell.classList.remove('has-weapon');
-        EndCell.removeChild(EndCell.firstChild);
+        this.weapon = this.getWeapon(newWeapon);
+        console.log(this.weapon);
+        endCell.classList.remove('has-weapon');
+        endCell.removeChild(endCell.firstChild);
         this.panel.refreshPanel();
     }
 
-    movePlayer(x, y, allCells, movableCells)
+    startCombat(){
+        console.log("COMBAT!!");
+    }
+
+    movePlayer(x, y, allCells)
     {
-       /* movableCells.forEach(cell=>{
+        allCells.rows[this.curY].cells[this.curX].classList.remove('has-player');
+        allCells.rows[this.curY].cells[this.curX].removeChild(allCells.rows[this.curY].cells[this.curX].firstChild);    
+        
+        const playerElt = this.createPlayerElt();
+        const newCell = allCells.rows[y].cells[x]; 
+        
+        if (newCell.classList.contains("has-player")){
+                    this.startCombat();
+        }
+        if (this.checkWeapon(newCell)){
+            this.switchWeapon(allCells.rows[this.curY].cells[this.curX], newCell);
+        }
+
+        newCell.classList.add("has-player");
+        newCell.appendChild(playerElt);
+        this.curX = x;
+        this.curY = y;
+    }
+
+    playerPlay(map, allCells)
+    {
+        //2 si ya combattant a cote se battre sinon se deplacer
+        //3 reinitialiser le tour du joueur
+        const movableCells = this.getMovableCells(this.curX, this.curY, map.nb, map.rows);
+        this.showMovableCells(movableCells);
+        const that = this;
+
+        movableCells.forEach(cell=>{
             cell.addEventListener('click', function(e){
                 e.preventDefault();
-                console.log(this.cellIndex, this.parentNode.rowIndex);*/
-                allCells.rows[this.curY].cells[this.curX].classList.remove('has-player');
-                allCells.rows[this.curY].cells[this.curX].removeChild(allCells.rows[this.curY].cells[this.curX].firstChild);
-                    
-                const playerElt = this.createPlayerElt();
-                allCells.rows[y].cells[x].classList.add('has-player');
-                allCells.rows[y].cells[x].appendChild(playerElt);
-                if (this.checkWeapon(allCells.rows[y].cells[x])){
-                    this.switchWeapon(allCells.rows[this.curY].cells[this.curX], allCells.rows[y].cells[x]);
+                console.log(this.cellIndex, this.parentNode.rowIndex);
+                if(that.playerTurn){
+                        that.movePlayer(this.cellIndex, this.parentNode.rowIndex, allCells, movableCells);
+                        that.playerTurn = false;
+                        that.enemy.playerTurn = true;
+                        that.removeMovableCells(movableCells);
                 }
-                this.curX = x;
-                this.curY = y;
-                
-                // remove movable cells
-                /*});
-            })
-       */
-        //regarder si il y a une arme
-        //regarder si ya un combattant a coté
+            });
+        })
     }
-    
+
     // vérifie s'il y a des joueurs à coté
     checkClosePlayer(x = this.curX, y = this.curY, mapX, mapY){
         const closeCells = this.getCloseCells(x, y, mapX, mapY);
@@ -153,49 +181,17 @@ class Player {
         return Math.floor(Math.random() * length);
     }
 
-/*
-   placePlayer(){
-        // 1 recupérer les cases
-    const allCells = document.querySelectorAll('.allMap');
-    let selectedCell = allCells[Math.floor(Math.random() * allCells.length)];
-    let x = selectedCell.cellIndex;
-    let y = selectedCell.parentNode.rowIndex;
-
-        let boucle = 1;
-
-        console.log(allCells.length);
-        console.log(selectedCell, x, y);
-        console.log(this.checkClosePlayer(x, y));
-        while(selectedCell.classList.contains('disabled')
-              || selectedCell.classList.contains('has-player')
-              || this.checkClosePlayer(x, y))
-        {
-            selectedCell = allCells[Math.floor(Math.random() * allCells.length)];
-            x = selectedCell.parentNode.cellIndex;
-            y = selectedCell.parentNode.rowIndex;
-
-            console.log("boucle :", boucle);
-            console.log(selectedCell, x, y);
-            console.log(this.checkClosePlayer());
-            console.log(this.getCloseCells(x, y));
-            boucle = boucle + 1;
-        }
-        selectedCell.classList.add('has-player');
-        selectedCell.setAttribute("value", this.name);
-    }*/
-
     // créer l'élément joueur
     createPlayerElt()
     {
         const playerElt = document.createElement('span');
         playerElt.classList.add('has-player');
-        playerElt.setAttribute("value", this.name);
+        playerElt.setAttribute("data-player", this.name);
         // playerElt.innerHTML= `<img src="./src/${this.imgSrc}">`
         playerElt.style.backgroundImage = `url(./src/${this.imgSrc})`;
         
         return playerElt;
     }
-
 
     // place le joueur sur la map après la création
     placePlayer(mapX, mapY){

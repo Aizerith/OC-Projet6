@@ -38,30 +38,14 @@ class Map {
         const weapon2 = new Weapon("masse", 12, "club.png");
         const weapon3 = new Weapon("épée", 15, "sword.png");
         const weapon4 = new Weapon("pistolet", 20, "gun.png");
+        const weapon5 = new Weapon("couteau", 10, 'knife.png');
 
         weapon1.placeWeapon();
         weapon2.placeWeapon();
         weapon3.placeWeapon();
         weapon4.placeWeapon();
 
-        const weapons = [weapon1, weapon2, weapon3, weapon4];
-        console.log(weapons[0]);
+        const weapons = [weapon1, weapon2, weapon3, weapon4, weapon5];
         return weapons;
     }
 }
-/*
-const gameMap = new Map('#map-container', 6, 5);
-const player1 = new Player("Jean", "p1.png");
-const panel1 = new Panel(document.getElementById('displayPlayer'), player1);
-const player2 = new Player("Luke", "p2.png");
-const panel2 = new Panel(document.getElementById('displayPlayer'), player2);
-
-gameMap.buildMap();
-gameMap.disableCells();
-player1.placePlayer();
-panel1.displayPlayer();
-player2.placePlayer();
-panel2.displayPlayer();
-gameMap.initweapons();
-
-*/

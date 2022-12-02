@@ -10,6 +10,7 @@ class Game {
         this.allCells = document.querySelector('table');
     }
 
+    /*/ mettre dans player
     playerPlay(player)
     {
         //2 si ya combattant a cote se battre sinon se deplacer
@@ -30,15 +31,17 @@ class Game {
                 }
             });
         })
-    }
+    }*/
 
     initPlayer(game, panel1, panel2){
         this.player1.game = game;
         this.player1.enemy = this.player2;
+        this.player1.playerTurn = true;
         this.player1.panel = panel1
 
         this.player2.game = game;
         this.player2.enemy = this.player1;
+        this.player2.playerTurn = false;
         this.player2.panel = panel2;
     }
 
@@ -53,28 +56,17 @@ class Game {
         btnStart.addEventListener('click', function(e){
             e.preventDefault();
             if (that.player1.playerTurn){
-                that.playerPlay(that.player1);
+                that.player1.playerPlay(that.map, that.allCells);
             }
             else{
-                that.playerPlay(that.player2);
+                that.player2.playerPlay(that.map, that.allCells);
             }
-            //obtenir les cases de deplacement
-            //monter les cases de deplacement
-           /* let movableCells = that.player1.getMovableCells(that.player1.curX, that.player1.curY, that.map.nb, that.map.rows)
-            that.player1.showMovableCells(movableCells);
-            movableCells.forEach(cell=>{
-                cell.addEventListener('click', function(e){
-                    e.preventDefault();
-                    console.log(this.cellIndex, this.parentNode.rowIndex);
-                    that.player1.movePlayer(this.cellIndex, this.parentNode.rowIndex, that.allCells);
-                    });
-                })*/
         });
     }
 }
 
 // construit la map
-const gameMap = new Map('#map-container', 8, 7);
+const gameMap = new Map('#map-container', 6, 5);
 gameMap.buildMap();
 gameMap.disableCells();
 
