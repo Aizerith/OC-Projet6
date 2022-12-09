@@ -118,8 +118,19 @@ class Player {
 
     startCombat(){
         console.log("COMBAT!!");
+        if (this.hp <= 0 || this.enemy.hp <= 0){
+            return;
+        } 
+        if(this.enemy.atkMode) {
+            this.enemy.hp = this.enemy.hp - this.weapon.damage;
+            this.hp = this.hp - this.enemy.weapon.damage;
+        }
+        else {
+            this.enemy.hp = this.enemy.hp - (this.weapon.damage / 2);
+        }
     }
 
+    /*
     movePlayer(x, y, allCells)
     {
         allCells.rows[this.curY].cells[this.curX].classList.remove('has-player');
@@ -140,11 +151,18 @@ class Player {
         this.curX = x;
         this.curY = y;
     }
-
+    */
+   
     playerPlay(map, allCells)
     {
-        //2 si ya combattant a cote se battre sinon se deplacer
-        //3 reinitialiser le tour du joueur
+        if (!this.playerTurn){
+            return
+        }
+        else {
+            //this.movePlayer(allCells, map);
+            this.arrowMove(allCells, map);
+        }
+        /*
         const movableCells = this.getMovableCells(this.curX, this.curY, map.nb, map.rows);
         this.showMovableCells(movableCells);
         const that = this;
@@ -154,13 +172,13 @@ class Player {
                 e.preventDefault();
                 console.log(this.cellIndex, this.parentNode.rowIndex);
                 if(that.playerTurn){
-                        that.movePlayer(this.cellIndex, this.parentNode.rowIndex, allCells, movableCells);
+                        that.movePlayer(this.cellIndex, this.parentNode.rowIndex, allCells, map);
                         that.playerTurn = false;
                         that.enemy.playerTurn = true;
                         that.removeMovableCells(movableCells);
                 }
             });
-        })
+        })*/
     }
 
     // vérifie s'il y a des joueurs à coté
@@ -223,5 +241,109 @@ class Player {
     getGame(game){
         this.game = game;
     }
+
+    movePlayer(allCells, map) {
+    //1 - récupérer les cases libres 
+        const movableCells = this.getMovableCells(this.curX, this.curY, map.nb, map.rows);
+        this.showMovableCells(movableCells);
+        const that = this;
+
+        movableCells.forEach(cell => {
+        
+        cell.addEventListener('click', function(e) {
+            e.preventDefault();
+            //1 - supprimer la classe moveCells
+            if(!that.playerTurn){
+                return;
+            }
+            that.removeMovableCells(movableCells);
+            //2 Déplacer le joueur dans la case 
+            
+            const newCell = allCells.rows[this.parentNode.rowIndex].cells[this.cellIndex];
+
+            if (newCell.classList.contains("has-player")) {
+                that.startCombat();
+                return;
+            }
+
+            allCells.rows[that.curY].cells[that.curX].classList.remove('has-player');
+            allCells.rows[that.curY].cells[that.curX].removeChild(allCells.rows[that.curY].cells[that.curX].firstChild);
+
+            if (that.checkWeapon(newCell)) {
+                that.switchWeapon(allCells.rows[that.curY].cells[that.curX], newCell);
+            }
+            const playerElt = that.createPlayerElt();
+            newCell.classList.add("has-player");
+            newCell.appendChild(playerElt);
+            that.curX = this.cellIndex;
+            that.curY = this.parentNode.rowIndex;
+            that.playerTurn = false;
+            that.enemy.playerTurn = true;
+        })
+    })
+  }
+
+  moveFocusedPlayer(event) {
+    const start = document.activeElement;
+	let startX = start.cellIndex;
+	let startY = start.parentNode.rowIndex;
+
+	const key = event.key;
+	let newX = startX;
+	let newY = startY;
+  
+  console.log(key);
+    if (this.playerTurn){
+	switch(key){
+		case "ArrowUp" :
+    	newY = startY - 1;
+    	break;
+    case "ArrowDown" :
+    	newY = startY + 1;
+    	break;
+    case "ArrowLeft" :
+    	newX = startX - 1;
+    	break;
+    case "ArrowRight" :
+    	newX = startX + 1;
+    	break;
+    case "Enter" :
+        this.playerTurn = false;
+        this.enemy.playerTurn = true;
+        break;
+    }
+    const table = document.querySelector('table');
+    let newCell = table.rows[newY].cells[newX];
+    newCell.focus();
+    }
+  }
+
+  arrowMove(allCells, map){
+    const startCell = allCells.rows[this.curY].cells[this.curX];
+    const movableCells = this.getMovableCells(this.curX, this.curY, map.nb, map.rows);
+    this.showMovableCells(movableCells);
+    startCell.focus();
+    document.addEventListener("keydown", (e) => {
+        e.preventDefault();
+        this.moveFocusedPlayer(e);
+    });
+  }
+
+
+//  playerPlay(map, allCells) {
+  	// 1 Vérifier si c'est ton tour
+    /*
+    Si false : return;
+    */
+    
+    //2 si ya combattant a cote se battre sinon se deplacer
+    /*
+    Si combattant : Combattre 
+    Sinon : movePlayer    
+    
+    */
+    
+    //3 reinitilaise les tours
+  //}
 
 }

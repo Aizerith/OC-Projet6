@@ -14,6 +14,7 @@ class Map {
             for(let j = 0; j < this.nb; j++){
                 let mapCell = document.createElement('td');
                 mapCell.classList.add('enable', 'allMap');
+                mapCell.setAttribute('tabindex', 0);
                 row.appendChild(mapCell);
             }
         }
