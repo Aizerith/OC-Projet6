@@ -1,17 +1,17 @@
 class Map {
-    constructor(table, nbColones, nbLignes){
-        this.nb = nbColones;
-        this.rows = nbLignes;
-        this.table = document.querySelector(table);
+    constructor(nbColones, nbLignes){
+        this.mapX = nbColones;
+        this.mapY = nbLignes;
+        this.table = document.querySelector('table');
     }
 
     buildMap(){
 
-        for(let i = 0; i < this.rows; i++){
+        for(let i = 0; i < this.mapY; i++){
             const row = document.createElement('tr');
             this.table.appendChild(row);
 
-            for(let j = 0; j < this.nb; j++){
+            for(let j = 0; j < this.mapX; j++){
                 let mapCell = document.createElement('td');
                 mapCell.classList.add('enable', 'allMap');
                 mapCell.setAttribute('tabindex', 0);
