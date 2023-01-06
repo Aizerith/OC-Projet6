@@ -31,7 +31,6 @@ span.has-player {
 }
 
 span.has-weapon {
-    /*background: red;*/
     width: 100%;
     height: 100%;
     display: inline-block;
@@ -42,11 +41,22 @@ span.has-weapon {
 
 .displayPlayer {
     display: flex;
-    margin: 0 -5px;
+    align-items: center;
+    justify-content: center;
+    margin: -5px;
 }
 
-#gamebutton {
-    margin: 10px 0 0 5px;
+.gamebutton {
+    margin: 10px auto;
+}
+
+#gameStart{
+    display: block;
+    margin: auto;
+}
+
+h1, h2{
+    text-align: center;
 }
 
 .info-joueur {
@@ -54,5 +64,59 @@ span.has-weapon {
     width: 200px;
     height: 220px;
     text-align: center;
-    margin: 10px 0 0 5px;
+    margin: 5px;
+}
+
+table{
+    margin: auto;
+}
+
+.modal-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-container.active{
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #333333d3;
+}
+
+.modal {
+    width: 95%;
+    max-width: 500px;
+    min-width: 300px;
+    padding: 30px;
+    background: #fff;
+    border-radius: 5px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal h2 {
+    margin: auto;
+    font-weight: 500;
+}
+
+.modal p{
+    text-align: center;
+}
+
+.modal #fight-mode-choice {
+    text-align: center;
+}
+
+.modal #replay{
+    display: block;
+    margin: 10 auto;
 }
