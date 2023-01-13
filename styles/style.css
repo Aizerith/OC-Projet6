@@ -1,0 +1,156 @@
+body {
+    background-color: #2a9d8f;
+}
+
+table, td, tr {
+    border: 2px solid black;
+    border-radius: 5px;
+}
+
+td {
+    box-sizing: border-box;
+    width: 100px;
+    height: 100px;
+    background-color: #457b9d;
+}
+
+td:focus {
+    background-color: #8ecae6;
+}
+
+.moveCells{
+    background-color: #a8dadc;
+}
+
+.disabled {
+    background: #7f4f24;
+}
+
+span.has-player {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 80px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+span.has-weapon {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 60px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
+.displayPlayer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: -5px;
+}
+
+.gamebutton {
+    margin-top: 15px;
+}
+
+#gameStart{
+    display: block;
+    margin: auto;
+    background-color:bisque;
+    font-size: large;
+    font-weight: 700;
+    border-radius: 7px;
+    min-width: 100px;
+    min-height: 40px;
+}
+
+h1, h2{
+    text-align: center;
+}
+
+.info-joueur {
+    border: 2px solid black;
+    border-radius: 7px;
+    width: 200px;
+    height: 220px;
+    text-align: center;
+    margin: 20px;
+    background-color: #cb997e;
+    font-weight: 700;
+}
+
+.info-joueur h2{
+    margin-top: 20px;
+    margin-bottom: 15px;
+}
+
+.info-joueur dl {
+    margin-top: 5px;
+}
+
+table{
+    margin: auto;
+}
+
+.modal-container {
+    display: none;
+    position: fixed;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal-container.active{
+    display: block;
+}
+
+.overlay {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #333333d3;
+}
+
+.modal {
+    width: 95%;
+    max-width: 500px;
+    min-width: 300px;
+    padding: 30px;
+    background: #ddbea9;
+    border-radius: 7px;
+    border: 3px solid #7f4f24;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.modal h2 {
+    margin: auto;
+}
+
+.modal p{
+    text-align: center;
+    font-size: large;
+}
+
+.modal #fight-mode-choice {
+    text-align: center;
+    font-size: large;
+}
+
+.modal #replay{
+    display: block;
+    margin: 10 auto;
+}
+
+.modal #confirm-choice{
+    margin-top: 25px;
+    background-color:rgb(236, 231, 213);
+    font-weight: 700;
+    border-radius: 7px;
+    min-width: 90px;
+    min-height: 35px;
+}
