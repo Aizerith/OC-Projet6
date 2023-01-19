@@ -13,6 +13,8 @@ export class Player {
         this.curY;
         this.panel;
         this.atkMode = true;
+        this.playerElt = $(`<span class="has-player" data-player="${this.name}"></span>`)
+                        .css("background-image", `url(./images/${this.imgSrc})`);
     }
 
     //  récupère les cases a coté d'une case dans un tableau
@@ -132,9 +134,7 @@ export class Player {
     switchWeapon(startCell, newCell) {
         
         startCell = $(startCell);
-
         const newWeapon = newCell.querySelector('.has-weapon').getAttribute('data-weapon');
-        console.log(newWeapon)
         
         // on dépose l'arme sur la case de départ
         startCell.addClass('has-weapon');
@@ -168,16 +168,15 @@ export class Player {
 
         // affiche le modale de combat
         this.game.fightModal.initFightModal(this);
-        const modalContainer = document.querySelector(".modal-container");
-        modalContainer.classList.add("active");
-
+        $(".modal-container").addClass("active");
+    
         // demmande de choix de mode
         this.game.fightModal.displayMessage(`${this.name} doit choisir un mode`);
 
         // modifie le mode de combat du joueur
-        const modeChoice = document.getElementById('confirm-choice');
+        const modeChoice = $('#confirm-choice');
         const that = this;
-        modeChoice.addEventListener('click', function(e) {
+        modeChoice.on('click', function(e) {
             e.preventDefault();
             if(that.getAtkMode() == "attack") {
                 that.atkMode = true;
@@ -224,7 +223,6 @@ export class Player {
             this.initFight();
         }
         else {
-            //this.clickMove();
             this.arrowMove(this.game.allCells, 0);
         }
     }
@@ -241,16 +239,6 @@ export class Player {
         return hasWarrior;
     }
 
-    // créer l'élément joueur
-    createPlayerElt() {
-        const playerElt = document.createElement('span');
-        playerElt.classList.add('has-player');
-        playerElt.setAttribute("data-player", this.name);
-        playerElt.style.backgroundImage = `url(./images/${this.imgSrc})`;
-
-        return playerElt;
-    }
-
     // place le joueur sur la map après la création
     placePlayer() {
         const allCells = document.querySelectorAll('.allMap');
@@ -258,11 +246,9 @@ export class Player {
         this.curX = selectedCell.cellIndex;
         this.curY = selectedCell.parentNode.rowIndex;
 
-        const playerElt = this.createPlayerElt();
-
         const placePlayerInCell = (cell, player) => {
             cell.classList.add('has-player');
-            cell.appendChild(player);
+            player.appendTo(cell);
         };
 
         // on vérifie qu'il est possible de placer le joueur sur la case
@@ -270,7 +256,7 @@ export class Player {
             !selectedCell.classList.contains("has-player") &&
             !selectedCell.classList.contains("has-weapon") &&
             !selectedCell.classList.contains("disabled")) {
-                placePlayerInCell(selectedCell, playerElt);
+                placePlayerInCell(selectedCell, this.playerElt);
         }
         else {
             this.placePlayer();
@@ -290,46 +276,11 @@ export class Player {
             }
             //============= 3-on se deplace
             newCell.classList.add("has-player");
-            newCell.appendChild(this.createPlayerElt());
-    
+            this.playerElt.appendTo(newCell);
+
             //============= 4-Redefinir position :
             this.curX = newCell.cellIndex; //attention pas de this
             this.curY = newCell.parentNode.rowIndex;
-    
-            //============= 5- Vérifier si autre joueur à côté et combattre si oui
-            if (this.checkClosePlayer()){
-                this.initFight();
-            }
-    }
-
-    clickMove() {
-        //1 - récupérer les cases libres 
-        const movableCells = this.getMovableCells();
-        const startCell = this.game.allCells.rows[this.curY].cells[this.curX]; //Stocker l'ancienne cellule dans une variable au lieu de répéter à chaque fois
-        this.showMovableCells(movableCells);
-        const that = this;
-
-        movableCells.forEach(cell => {
-
-            cell.addEventListener('click', function (e) {
-                e.preventDefault();
-                console.log('Click turn : ', that.playerTurn)
-
-                if (!that.playerTurn) {
-                    return;
-                }
-                //Supprimer la classe moveCells
-                that.removeMovableCells(movableCells);
-
-                that.moveActions(startCell, cell);
-
-                //mettre à jour tour des joueurs
-                that.playerTurn = false;
-                that.enemy.playerTurn = true;
-                console.log("changement de joueur");
-                that.enemy.playerPlay();
-            })
-        })
     }
 
     arrowMove(allCells, count) {
@@ -408,6 +359,10 @@ export class Player {
             if (isNewCellMovable) {
                 count++;
                 that.moveActions(startCell, newCell);
+                if (that.checkClosePlayer()){
+                    that.initFight();
+                    document.removeEventListener("keyup", move);
+                }      
             } else {
                 console.log("Pas de déplacement possible sur cette cellule");
                 newCell = startCell;

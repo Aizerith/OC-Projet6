@@ -1,3 +1,89 @@
+@media(max-width: 640px)
+{
+    td {
+        box-sizing: border-box;
+        width: 70px;
+        height: 70px;
+        background-color: #457b9d;
+    }
+    
+    span.has-player {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        background-size: 55px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    span.has-weapon {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        background-size: 45px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .gamebutton {
+        margin-top: 5px;
+    }
+
+    .info-joueur {
+        border: 2px solid black;
+        border-radius: 7px;
+        width: 150px;
+        height: 200px;
+        text-align: center;
+        margin: 10 5;
+        background-color: #cb997e;
+        font-weight: 400;
+    }
+}
+
+@media(min-width: 640px)
+{
+    td {
+        box-sizing: border-box;
+        width: 100px;
+        height: 100px;
+        background-color: #457b9d;
+    }    
+    
+    span.has-player {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        background-size: 80px;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    span.has-weapon {
+        width: 100%;
+        height: 100%;
+        display: inline-block;
+        background-size: 60px;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+
+    .gamebutton {
+        margin-top: 15px;
+    }
+
+    .info-joueur {
+        border: 2px solid black;
+        border-radius: 7px;
+        width: 200px;
+        height: 220px;
+        text-align: center;
+        margin: 20px;
+        background-color: #cb997e;
+        font-weight: 700;
+    }
+}
+
 body {
     background-color: #2a9d8f;
 }
@@ -5,13 +91,6 @@ body {
 td, tr {
     border: 2px solid black;
     border-radius: 5px;
-}
-
-td {
-    box-sizing: border-box;
-    width: 100px;
-    height: 100px;
-    background-color: #457b9d;
 }
 
 td:focus {
@@ -26,33 +105,11 @@ td:focus {
     background: #7f4f24;
 }
 
-span.has-player {
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-    background-size: 80px;
-    background-repeat: no-repeat;
-    background-position: center;
-}
-
-span.has-weapon {
-    width: 100%;
-    height: 100%;
-    display: inline-block;
-    background-size: 60px;
-    background-position: center;
-    background-repeat: no-repeat;
-}
-
 .displayPlayer {
     display: flex;
     align-items: center;
     justify-content: center;
     margin: -5px;
-}
-
-.gamebutton {
-    margin-top: 15px;
 }
 
 #gameStart{
@@ -70,15 +127,12 @@ h1, h2{
     text-align: center;
 }
 
-.info-joueur {
-    border: 2px solid black;
-    border-radius: 7px;
-    width: 200px;
-    height: 220px;
-    text-align: center;
-    margin: 20px;
-    background-color: #cb997e;
-    font-weight: 700;
+h2[data-player="Luke"]{
+    color: red;
+}
+
+h2[data-player="Marie"]{
+    color: blue;
 }
 
 .info-joueur h2{

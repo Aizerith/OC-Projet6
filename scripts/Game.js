@@ -49,6 +49,11 @@ class Game {
     }
 }
 
+// vérification taille d'écran
+if(screen.width < 400) {
+    alert("Taille d'écran trop petit");
+}
+
 // construit la map
 const gameMap = new Map(6, 5);
 gameMap.buildMap();

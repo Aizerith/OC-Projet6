@@ -8,7 +8,7 @@ export class Panel{
     displayPlayerInfo(){
         this.parentElt.innerHTML = `
         <div class="info-joueur">
-            <h2>${this.player.name}</h2>
+            <h2 data-player=${this.player.name}>${this.player.name}</h2>
             <dl>
                 <dt>Points de vie : ${this.player.hp}</dt>
                 <dt>Arme : ${this.player.weapon.name}</dt>
