@@ -39,9 +39,9 @@ export class Player {
         let newCell;
 
         // case de départ
-        /*newCell = allCells.rows[y].cells[x];
+        newCell = allCells.rows[y].cells[x];
         movableCells.push(newCell);
-        */
+        
 
         // verification et ajout cases du haut
         for (let i = 0; i < 3; i++) {
