@@ -4,13 +4,15 @@ export class Weapon{
         this.name = name;
         this.damage = damage;
         this.imgSrc = imgSrc;
+        this.weaponElt = $(`<span class="has-weapon" data-weapon="${this.name}"></span>`);
     }
 
     // donne un chiffre aléatoire 
     getRandNb(length) {
         return Math.floor(Math.random() * length);
     }
-
+    
+    /*
     // crée les armes
     createWeaponElt(){
         const weaponElt = document.createElement('span');
@@ -20,25 +22,26 @@ export class Weapon{
 
         return weaponElt;
     }
+    */
 
     // place les armes sur la map
     placeWeapon(){
-        const allCells = document.querySelectorAll('.enable');
+        const allCells = $('.enable');
 
         // defini une case de la map au hasard
         let randomIndex = this.getRandNb(allCells.length);
-        let curCell = allCells[randomIndex];
+        let curCell = $(allCells[randomIndex]);
 
         // tant qu'il y a une arme ou un joueur sur la case, on defini une nouvelle case
-        while(curCell.classList.contains('has-player')
-        || curCell.classList.contains('has-weapon'))
+        while(curCell.hasClass('has-player')
+        || curCell.hasClass('has-weapon'))
         {
             randomIndex = this.getRandNb(allCells.length);
-            curCell = allCells[randomIndex];
+            curCell = $(allCells[randomIndex]);
         }
-
         // ajoute l'arme sur la case
-        curCell.classList.add('has-weapon');
-        curCell.appendChild(this.createWeaponElt());
+        curCell.addClass('has-weapon');
+        this.weaponElt.css("background-image", `url(./images/${this.imgSrc})`);
+        curCell.append(this.weaponElt);
     }
 }

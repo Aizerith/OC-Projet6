@@ -15,13 +15,18 @@ export class Player {
         this.atkMode = true;
     }
 
+    //  récupère les cases a coté d'une case dans un tableau
     getCloseCells(x = this.curX, y = this.curY) {
+        
         const allCells = document.querySelector('table');
         const CloseCells = [];
+
+        // on vérifie que les cases sont dans la map avant de les rajouter
         (y > 0) ? CloseCells.push(allCells.rows[y - 1].cells[x]): "";
         (y < this.game.map.mapY - 1) ? CloseCells.push(allCells.rows[y + 1].cells[x]): "";
         (x > 0) ? CloseCells.push(allCells.rows[y].cells[x - 1]): "";
         (x < this.game.map.mapX - 1) ? CloseCells.push(allCells.rows[y].cells[x + 1]): "";
+        
         return (CloseCells)
     }
 
@@ -32,6 +37,11 @@ export class Player {
         let moveX = 1;
         let moveY = 1;
         let newCell;
+
+        // case de départ
+        /*newCell = allCells.rows[y].cells[x];
+        movableCells.push(newCell);
+        */
 
         // verification et ajout cases du haut
         for (let i = 0; i < 3; i++) {
@@ -119,14 +129,26 @@ export class Player {
     }
 
     // échange l'arme du joueur avec celui récupé
-    switchWeapon(startCell, endCell) {
+    switchWeapon(startCell, newCell) {
+        
+        startCell = $(startCell);
 
-        const newWeapon = endCell.querySelector('.has-weapon').getAttribute('data-weapon');
-        startCell.classList.add('has-weapon');
-        startCell.appendChild(this.weapon.createWeaponElt());
+        const newWeapon = newCell.querySelector('.has-weapon').getAttribute('data-weapon');
+        console.log(newWeapon)
+        
+        // on dépose l'arme sur la case de départ
+        startCell.addClass('has-weapon');
+        this.weapon.weaponElt.css("background-image", `url(./images/${this.weapon.imgSrc})`);
+        startCell.append(this.weapon.weaponElt);
+        
+        // on change l'arme du player par la nouvelle arme
         this.weapon = this.getWeapon(newWeapon);
-        endCell.classList.remove('has-weapon');
-        endCell.removeChild(endCell.firstChild);
+
+        // on retire la nouvelle arme de la map
+        newCell.classList.remove('has-weapon');
+        newCell.removeChild(newCell.firstChild);
+
+        // on met a jour les infos du joueur
         this.panel.refreshPanel();
     }
 
@@ -378,7 +400,7 @@ export class Player {
             //définir la nouvelle cellule
             newCell = allCells.rows[newY].cells[newX];
             const isNewCellMovable =
-                newCell != "undefined" && newCell.classList.contains("enable") && newCell.classList.contains("moveCells")
+                newCell != "undefined" && newCell.classList.contains('enable') && newCell.classList.contains('moveCells')
                 ? true
                 : false;
         

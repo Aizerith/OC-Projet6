@@ -2,7 +2,7 @@ body {
     background-color: #2a9d8f;
 }
 
-table, td, tr {
+td, tr {
     border: 2px solid black;
     border-radius: 5px;
 }
@@ -144,6 +144,11 @@ table{
 .modal #replay{
     display: block;
     margin: 10 auto;
+    background-color:rgb(236, 231, 213);
+    font-weight: 700;
+    border-radius: 7px;
+    min-width: 90px;
+    min-height: 35px;
 }
 
 .modal #confirm-choice{

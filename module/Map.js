@@ -4,41 +4,30 @@ export class Map {
     constructor(nbColones, nbLignes){
         this.mapX = nbColones;
         this.mapY = nbLignes;
-        this.table = document.querySelector('table');
+        this.table = $('table');
     }
 
     buildMap(){
 
         for(let i = 0; i < this.mapY; i++){
-            const row = document.createElement('tr');
-            this.table.appendChild(row);
-
+            $(`<tr id="row-${i}"></tr>`).appendTo(this.table);
             for(let j = 0; j < this.mapX; j++){
-                let mapCell = document.createElement('td');
-                mapCell.classList.add('enable', 'allMap');
-                mapCell.setAttribute('tabindex', 0);
-                row.appendChild(mapCell);
+                $('<td class="enable allMap" tabindex=0></td>').appendTo(`#row-${i}`);
             }
-            /*
-            for(let j = 0; j < this.mapX; j++){
-                let mapCell = $("<td></td>").addClass("enable allMap").attr('tabindex', '0');
-                row.appendChild(mapCell);
-            }
-            */
         }
     }
 
     disableCells(){
-        const allCells = document.querySelectorAll('.enable');
+        const allCells = $('.enable');
         const maxGreyCells = allCells.length / 5;
 
         for(let i = 0; i < maxGreyCells; i++){
             let randomIndex = Math.floor(Math.random() * allCells.length);
-            while(allCells[randomIndex].classList.contains('disabled')){
+            while($(allCells[randomIndex]).hasClass('disabled')){
                 randomIndex = Math.floor(Math.random() * allCells.length);
             }
-            allCells[randomIndex].classList.add('disabled');
-            allCells[randomIndex].classList.remove('enable');
+            $(allCells[randomIndex]).addClass('disabled');
+            $(allCells[randomIndex]).removeClass('enable');
         }
     }
 

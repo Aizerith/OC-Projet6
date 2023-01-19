@@ -22,17 +22,23 @@ export class Modal{
     }
     
     // affiche un message dans le modal
-    displayMessage(message) {
+    /*displayMessage(message) {
         const displayElt = document.getElementById("message-display");
         displayElt.innerHTML = "";
         let elt = document.createElement('p');
         elt.textContent = message;
         displayElt.appendChild(elt);
         return null;
+    }*/
+
+    displayMessage(message) {
+        $('#message-display').text("");
+        $('#message-display').append($("<p></p>").text(message));
+        return null;
     }
 
     // affiche le message de fin de jeu
-    endGameMessage(player){
+    /*endGameMessage(player){
         const displayElt = document.querySelector(".modal");
 
         displayElt.innerHTML =`
@@ -41,5 +47,12 @@ export class Modal{
                 <button id="replay">Rejouer</button>
             </div>
         `
+    }*/
+
+    endGameMessage(player){
+        $('.modal').html(`
+        <h2>Fin du combat!</h2>
+        <p>Victoire de ${player}!!</p>
+        <button id="replay">Rejouer</button>`);
     }
 }
