@@ -3,7 +3,7 @@ import { Weapon } from "./Weapon.js";
 export class Player {
     constructor(name, imgSrc, game) {
         this.name = name;
-        this.hp = 30;
+        this.hp = 100;
         this.weapon = new Weapon("couteau", 10, 'knife.png');
         this.imgSrc = imgSrc;
         this.game = game;
@@ -132,10 +132,9 @@ export class Player {
 
     // échange l'arme du joueur avec celui récupé
     switchWeapon(startCell, newCell) {
-        
         startCell = $(startCell);
-        const newWeapon = newCell.querySelector('.has-weapon').getAttribute('data-weapon');
-        
+        const newWeapon = $(newCell).find('span').attr('data-weapon');
+
         // on dépose l'arme sur la case de départ
         startCell.addClass('has-weapon');
         this.weapon.weaponElt.css("background-image", `url(./images/${this.weapon.imgSrc})`);
@@ -146,7 +145,9 @@ export class Player {
 
         // on retire la nouvelle arme de la map
         newCell.classList.remove('has-weapon');
-        newCell.removeChild(newCell.firstChild);
+        if (newCell.firstChild) {
+            newCell.removeChild(newCell.firstChild);
+        }
 
         // on met a jour les infos du joueur
         this.panel.refreshPanel();
@@ -218,10 +219,12 @@ export class Player {
     playerPlay() {
         if (!this.playerTurn) {
             return;
-        } 
+        }
+        // si ennemi à coté initie le combat
         if (this.checkClosePlayer()){
             this.initFight();
         }
+        // sinon lance le déplacement
         else {
             this.arrowMove(this.game.allCells, 0);
         }
@@ -246,6 +249,7 @@ export class Player {
         this.curX = selectedCell.cellIndex;
         this.curY = selectedCell.parentNode.rowIndex;
 
+        // place le joueur sur la case
         const placePlayerInCell = (cell, player) => {
             cell.classList.add('has-player');
             player.appendTo(cell);
@@ -263,30 +267,31 @@ export class Player {
         }
     }
 
+    // action pour déplacment
     moveActions(startCell, newCell)
     {
-        //============= 1-je verifie si arme
+        // on verifie s'il y a une arme
         if (this.checkWeapon(newCell)) {
             this.switchWeapon(startCell, newCell);
             }
-            //============= 2-nettoyer ancienne cellule
+            // on nettoie l'ancienne cellule
             startCell.classList.remove("has-player");
             if (startCell.childNodes[0]) {
             startCell.childNodes[0].remove();
             }
-            //============= 3-on se deplace
+            // on se deplace
             newCell.classList.add("has-player");
             this.playerElt.appendTo(newCell);
 
-            //============= 4-Redefinir position :
-            this.curX = newCell.cellIndex; //attention pas de this
+            //on redefini la position du joueur
+            this.curX = newCell.cellIndex;
             this.curY = newCell.parentNode.rowIndex;
     }
 
+    // déplacement au clavier
     arrowMove(allCells, count) {
 
     // Variables définies 1 fois lors de l'appel de la méthode
-    // const table = document.querySelector("table");
         const that = this;
         let startCell = allCells.rows[this.curY].cells[this.curX];
         startCell.focus();
@@ -295,21 +300,21 @@ export class Player {
 
         //fonction appelée à chaque keydown
         function move(e) {
-            // e.preventDefault();
+            e.preventDefault();
             if (!that.playerTurn) {
                 return;
             }
 
             const key = e.key;
         
-            //Si on a cliqué ENTRER = fin du tour du joueur
+            //Si touche ENTRER = fin du tour du joueur
             if (key == "Enter") {
                 //FIN DE TOUR
-                //mettre à jour tour des joueurs
+                //met à jour tour des joueurs
                 that.playerTurn = false;
                 that.enemy.playerTurn = true;
                 document.removeEventListener("keyup", move); //je supprime l'écouteur d'événement actuel
-                that.removeMovableCells(movableCells);
+                that.removeMovableCells(movableCells); // retire les cases déplacables
                 that.enemy.playerPlay(); //au tour de l'autre
                 return;
             }
@@ -330,19 +335,15 @@ export class Player {
             switch (key) {
                 case "ArrowUp":
                 newY = startY - 1;
-                //newY = newY >= 0 ? newY : 0; //On ne veut pas sortir de la zone
                 break;
                 case "ArrowDown":
-                newY = startY + 1; //à compléter
-                //newY = newY < that.game.map.mapY ? newY : newY - 1; 
+                newY = startY + 1; 
                 break;
                 case "ArrowLeft":
-                newX = startX - 1;
-                //newX = newX >= 0 ? newX : 0;
+                newX = startX - 1; 
                 break;
                 case "ArrowRight":
-                newX = startX + 1; //à compléter
-                //newX = newX < that.game.map.mapX ? newX : newX - 1
+                newX = startX + 1;
                 break;
                 default:
                 return;
@@ -364,7 +365,6 @@ export class Player {
                     document.removeEventListener("keyup", move);
                 }      
             } else {
-                console.log("Pas de déplacement possible sur cette cellule");
                 newCell = startCell;
             }
         
@@ -377,6 +377,7 @@ export class Player {
                 //met à jour tour joueur
                 that.playerTurn = false;
                 that.enemy.playerTurn = true;
+
                 document.removeEventListener("keyup", move);
                 that.removeMovableCells(movableCells);
                 that.enemy.playerPlay();

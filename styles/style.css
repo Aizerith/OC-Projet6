@@ -25,17 +25,13 @@
         background-repeat: no-repeat;
     }
 
-    .gamebutton {
-        margin-top: 5px;
-    }
-
     .info-joueur {
         border: 2px solid black;
         border-radius: 7px;
-        width: 150px;
-        height: 200px;
+        width: 180px;
+        height: 230px;
         text-align: center;
-        margin: 10 5;
+        margin: 10px 5px;
         background-color: #cb997e;
         font-weight: 400;
     }
@@ -68,10 +64,6 @@
         background-repeat: no-repeat;
     }
 
-    .gamebutton {
-        margin-top: 15px;
-    }
-
     .info-joueur {
         border: 2px solid black;
         border-radius: 7px;
@@ -82,10 +74,15 @@
         background-color: #cb997e;
         font-weight: 700;
     }
+
+    .displayPlayer {
+        margin: -5px;
+    }
 }
 
 body {
     background-color: #2a9d8f;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
 }
 
 td, tr {
@@ -109,7 +106,11 @@ td:focus {
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: -5px;
+}
+
+
+.gameButton{
+    margin: 10px 5px 0;
 }
 
 #gameStart{
@@ -197,7 +198,7 @@ table{
 
 .modal #replay{
     display: block;
-    margin: 10 auto;
+    margin: 10px auto;
     background-color:rgb(236, 231, 213);
     font-weight: 700;
     border-radius: 7px;

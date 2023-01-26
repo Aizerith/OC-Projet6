@@ -12,18 +12,6 @@ export class Weapon{
         return Math.floor(Math.random() * length);
     }
     
-    /*
-    // crée les armes
-    createWeaponElt(){
-        const weaponElt = document.createElement('span');
-        weaponElt.classList.add('has-weapon');
-        weaponElt.setAttribute("data-weapon", this.name);
-        weaponElt.style.backgroundImage= `url(./images/${this.imgSrc})`;
-
-        return weaponElt;
-    }
-    */
-
     // place les armes sur la map
     placeWeapon(){
         const allCells = $('.enable');
@@ -39,6 +27,7 @@ export class Weapon{
             randomIndex = this.getRandNb(allCells.length);
             curCell = $(allCells[randomIndex]);
         }
+        
         // ajoute l'arme sur la case
         curCell.addClass('has-weapon');
         this.weaponElt.css("background-image", `url(./images/${this.imgSrc})`);
