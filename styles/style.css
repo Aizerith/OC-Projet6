@@ -1,88 +1,30 @@
-@media(max-width: 640px)
-{
-    td {
-        box-sizing: border-box;
-        width: 70px;
-        height: 70px;
-        background-color: #457b9d;
-    }
-    
-    span.has-player {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        background-size: 55px;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
+/*====================
+==== Mobile ==========
+==== Général =========
+==== Game Items ======
+==== Player Panel ====
+==== Modal ===========
+==== Large Screen ====
+====================*/
 
-    span.has-weapon {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        background-size: 45px;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
+/*==== Mobile ====*/
 
-    .info-joueur {
-        border: 2px solid black;
-        border-radius: 7px;
-        width: 180px;
-        height: 230px;
-        text-align: center;
-        margin: 10px 5px;
-        background-color: #cb997e;
-        font-weight: 400;
-    }
-}
-
-@media(min-width: 640px)
-{
-    td {
-        box-sizing: border-box;
-        width: 100px;
-        height: 100px;
-        background-color: #457b9d;
-    }    
-    
-    span.has-player {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        background-size: 80px;
-        background-repeat: no-repeat;
-        background-position: center;
-    }
-
-    span.has-weapon {
-        width: 100%;
-        height: 100%;
-        display: inline-block;
-        background-size: 60px;
-        background-position: center;
-        background-repeat: no-repeat;
-    }
-
-    .info-joueur {
-        border: 2px solid black;
-        border-radius: 7px;
-        width: 200px;
-        height: 220px;
-        text-align: center;
-        margin: 20px;
-        background-color: #cb997e;
-        font-weight: 700;
-    }
-
-    .displayPlayer {
-        margin: -5px;
-    }
-}
+/*==== Général ====*/
 
 body {
     background-color: #2a9d8f;
     font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
+
+h1, h2 {
+    text-align: center;
+}
+
+td {
+    box-sizing: border-box;
+    width: 70px;
+    height: 70px;
+    background-color: #457b9d;
 }
 
 td, tr {
@@ -90,11 +32,36 @@ td, tr {
     border-radius: 5px;
 }
 
+table {
+    margin: auto;
+}
+
+/*==== Game Items ====*/
+
+span.has-player {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 55px;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+span.has-weapon {
+    width: 100%;
+    height: 100%;
+    display: inline-block;
+    background-size: 45px;
+    background-position: center;
+    background-repeat: no-repeat;
+}
+
 td:focus {
     background-color: #8ecae6;
 }
 
-.moveCells{
+
+.moveCells {
     background-color: #a8dadc;
 }
 
@@ -102,21 +69,14 @@ td:focus {
     background: #7f4f24;
 }
 
-.displayPlayer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-
-.gameButton{
+.gameButton {
     margin: 10px 5px 0;
 }
 
-#gameStart{
+#gameStart {
     display: block;
     margin: auto;
-    background-color:bisque;
+    background-color: bisque;
     font-size: large;
     font-weight: 700;
     border-radius: 7px;
@@ -124,30 +84,43 @@ td:focus {
     min-height: 40px;
 }
 
-h1, h2{
-    text-align: center;
+/*==== Player Panel ====*/
+
+.playerPanel {
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
-h2[data-player="Luke"]{
+h2[data-player="Luke"] {
     color: red;
 }
 
-h2[data-player="Marie"]{
+h2[data-player="Marie"] {
     color: blue;
 }
 
-.info-joueur h2{
+.info-player {
+    border: 2px solid black;
+    border-radius: 7px;
+    width: 180px;
+    height: 230px;
+    text-align: center;
+    margin: 10px 5px;
+    background-color: #cb997e;
+    font-weight: 400;
+}
+
+.info-player h2 {
     margin-top: 20px;
     margin-bottom: 15px;
 }
 
-.info-joueur dl {
+.info-player dl {
     margin-top: 5px;
 }
 
-table{
-    margin: auto;
-}
+/*==== Modal ====*/
 
 .modal-container {
     display: none;
@@ -157,7 +130,7 @@ table{
     height: 100vh;
 }
 
-.modal-container.active{
+.modal-container.active {
     display: block;
 }
 
@@ -186,7 +159,7 @@ table{
     margin: auto;
 }
 
-.modal p{
+.modal p {
     text-align: center;
     font-size: large;
 }
@@ -196,21 +169,53 @@ table{
     font-size: large;
 }
 
-.modal #replay{
+.modal #replay {
     display: block;
     margin: 10px auto;
-    background-color:rgb(236, 231, 213);
+    background-color: rgb(236, 231, 213);
     font-weight: 700;
     border-radius: 7px;
     min-width: 90px;
     min-height: 35px;
 }
 
-.modal #confirm-choice{
+.modal #confirm-choice {
     margin-top: 25px;
-    background-color:rgb(236, 231, 213);
+    background-color: rgb(236, 231, 213);
     font-weight: 700;
     border-radius: 7px;
     min-width: 90px;
     min-height: 35px;
 }
+
+/* ==== Large Screen ==== */
+
+@media(min-width: 640px) {
+    td {
+        width: 100px;
+        height: 100px;
+    }
+
+    span.has-player {
+        display: inline-block;
+        background-size: 80px;
+    }
+
+    span.has-weapon {
+        background-size: 60px;
+    }
+
+    .info-player {
+        width: 200px;
+        margin: 20px;
+        font-weight: 700;
+    }
+
+    .playerPanel {
+        margin: -5px;
+    }
+}
+
+
+
+

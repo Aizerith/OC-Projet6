@@ -3,7 +3,7 @@ import { Weapon } from "./Weapon.js";
 export class Player {
     constructor(name, imgSrc, game) {
         this.name = name;
-        this.hp = 100;
+        this.hp = 30;
         this.weapon = new Weapon("couteau", 10, 'knife.png');
         this.imgSrc = imgSrc;
         this.game = game;

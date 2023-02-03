@@ -7,7 +7,7 @@ export class Panel{
     // affiche le panneau d'information du joueur
     displayPlayerInfo(){
         this.parentElt.innerHTML = `
-        <div class="info-joueur">
+        <div class="info-player">
             <h2 data-player=${this.player.name}>${this.player.name}</h2>
             <dl>
                 <dt>Points de vie : ${this.player.hp}</dt>

@@ -5,6 +5,7 @@ export class Map {
         this.mapX = nbColumns;
         this.mapY = nbRows;
         this.table = $('table');
+        this.maxGreyCells = (nbColumns * nbRows) / 5; // nombre d'obstacle max
     }
 
     // crée la map en fonction du nombre de lignes et de colonnes
@@ -21,11 +22,8 @@ export class Map {
     disableCells(){
         const allCells = $('.enable');
 
-        // on détermine un nombre d'obstacle en fonciton de la taille de la map
-        const maxGreyCells = allCells.length / 5;
-
         // on désactive les cases une par une
-        for(let i = 0; i < maxGreyCells; i++){
+        for(let i = 0; i < this.maxGreyCells; i++){
             let randomIndex = Math.floor(Math.random() * allCells.length);
             // si la case est déja désactivée on choisi une autre case
             while($(allCells[randomIndex]).hasClass('disabled')){

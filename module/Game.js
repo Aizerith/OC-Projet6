@@ -12,7 +12,7 @@ export class Game {
         this.fightModal = new Modal(document.querySelector(".modal-container"));
     }
 
-    // initialise les parametres des joueur 
+    // initialise les parametres des joueur
     initPlayer(panel1, panel2){
         this.player1.enemy = this.player2;
         this.player1.playerTurn = true;
